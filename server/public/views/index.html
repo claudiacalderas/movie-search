@@ -17,7 +17,7 @@
           <input type="text" ng-model="movieTitle" placeholder="MovieTitle">
           <button type="button" ng-click="getOMDB(movieTitle)">Search</button>
 
-          <div class="searchResult" ng-show="movieFromOMDB.show">
+          <div class="searchResult" ng-show="movieFromOMDB.showMovie">
             <div class="movieImage">
               <img src="{{movieFromOMDB.response.data.Poster}}">
             </div>
@@ -27,10 +27,11 @@
               <p>Genre: {{movieFromOMDB.response.data.Genre}}</p>
               <p>Director: {{movieFromOMDB.response.data.Director}}</p>
               <p>Actors: {{movieFromOMDB.response.data.Actors}}</p>
-
             </div>
           </div>
-
+          <div class="searchResult" ng-show="movieFromOMDB.showMessage">
+            <p>{{movieFromOMDB.response.data.Error}}</p>
+          </div>
         </div>
         <div ng-controller="DisplayController">
 

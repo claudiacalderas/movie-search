@@ -20,7 +20,8 @@ movieSearchApp.controller('FavoritesController',['$scope',function($scope) {
 movieSearchApp.factory('MovieService',['$http',function($http) {
 
   var movieFromOMDB = {
-    show:false
+    showMovie: false,
+    showMessage: false
   };
 
   return {
@@ -30,7 +31,17 @@ movieSearchApp.factory('MovieService',['$http',function($http) {
       var OMDBPath = "http://www.omdbapi.com/?t=" + movie + "&y=&plot=short&r=json";
       $http.get(OMDBPath).then(function(response) {
         movieFromOMDB.response = response;
-        movieFromOMDB.show = true;
+        if (movieFromOMDB.response.data.Response === "True") {
+          console.log('1 error is ', movieFromOMDB.response.data.Response);
+
+          movieFromOMDB.showMovie = true;
+          movieFromOMDB.showMessage = false;
+
+        } else {
+          console.log('2 error is ', movieFromOMDB.response.data.Response);
+          movieFromOMDB.showMovie = false;
+          movieFromOMDB.showMessage = true;
+        }
         console.log(response);
       });
     }
