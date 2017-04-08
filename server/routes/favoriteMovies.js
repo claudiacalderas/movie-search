@@ -45,5 +45,17 @@ router.post('/', function(req,res) {
   });
 });
 
+// deletes a movie from the favorites collection
+router.delete('/:id', function(req,res) {
+  console.log("/favorites delete route hit");
+  var id = req.params.id;
+  Movie.findByIdAndRemove(id, function(err, deletedMovie){
+    if(err){
+      console.log('Delete error', err);
+      res.sendStatus(500);
+    }
+      res.send(deletedMovie);
+    });
+});
 
 module.exports = router;

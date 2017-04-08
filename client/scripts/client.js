@@ -14,6 +14,8 @@ movieSearchApp.controller('FavoritesController',['$scope', 'MovieService', funct
   $scope.getFavorites = movieService.getFavorites;
   $scope.getFavorites();
   $scope.favoritesObject = movieService.favoritesObject;
+  $scope.deleteFavorite = movieService.deleteFavorite;
+
 
 }]);
 
@@ -57,9 +59,16 @@ movieSearchApp.factory('MovieService',['$http',function($http) {
 
   function addToFavorites(favoriteMovie) {
     var favMovie = angular.copy(favoriteMovie);
-    console.log('posting message: ',favMovie);
+    console.log('Posting movie: ',favMovie);
     $http.post('/favorites', favMovie).then(function(response) {
       console.log(response);
+      getFavorites();
+    });
+  }
+
+  function deleteFavorite(favoriteMovie) {
+    console.log('Deleting movie: ',favoriteMovie);
+    $http.delete('/favorites/' + favoriteMovie._id).then(function(response) {
       getFavorites();
     });
   }
@@ -70,7 +79,8 @@ movieSearchApp.factory('MovieService',['$http',function($http) {
     favoritesObject: favoritesObject,
     getFavorites: getFavorites,
     getOMDB: getOMDB,
-    addToFavorites: addToFavorites
+    addToFavorites: addToFavorites,
+    deleteFavorite: deleteFavorite
   };
 
 }]);
