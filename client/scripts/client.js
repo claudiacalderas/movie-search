@@ -1,5 +1,6 @@
 var movieSearchApp = angular.module('movieSearchApp', []);
 
+// Search controller
 movieSearchApp.controller('SearchController',['$scope', 'MovieService', function($scope, MovieService) {
   var movieService = MovieService;
   $scope.movieTitle = movieService.movieTitle;
@@ -9,6 +10,7 @@ movieSearchApp.controller('SearchController',['$scope', 'MovieService', function
 
 }]);
 
+// Favorites controller
 movieSearchApp.controller('FavoritesController',['$scope', 'MovieService', function($scope, MovieService) {
   var movieService = MovieService;
   $scope.getFavorites = movieService.getFavorites;
@@ -16,22 +18,29 @@ movieSearchApp.controller('FavoritesController',['$scope', 'MovieService', funct
   $scope.favoritesObject = movieService.favoritesObject;
   $scope.deleteFavorite = movieService.deleteFavorite;
 
-
 }]);
 
+// MovieService factory
 movieSearchApp.factory('MovieService',['$http',function($http) {
 
   var movieTitle = "";
 
+  // movieFromOMDB is an object that stores response from OMDB
+  // showMovie and showMessage are flags that help displaying the
+  // response from the server diferentiating if a movie was found or
+  // if an error message came from the server
   var movieFromOMDB = {
     showMovie: false,
     showMessage: false
   };
 
+  // object that contains array of favorite movies.
+  // gets values from the database ($http.get)
   var favoritesObject = {
     favorites: []
   };
 
+  // gets favorite movies stored in DB
   function getFavorites() {
     console.log('in getFavorites');
     $http.get('/favorites').then(function(response) {
@@ -40,9 +49,11 @@ movieSearchApp.factory('MovieService',['$http',function($http) {
     });
   }
 
+  // gets information from OMDB based on search criteria
   function getOMDB(movieTitle) {
     var movie = angular.copy(movieTitle);
     movieTitle = "";
+    if (movie) {
     var OMDBPath = "http://www.omdbapi.com/?t=" + movie + "&y=&plot=short&r=json";
     $http.get(OMDBPath).then(function(response) {
       movieFromOMDB.response = response;
@@ -55,8 +66,10 @@ movieSearchApp.factory('MovieService',['$http',function($http) {
       }
       console.log(response);
     });
+    }
   }
 
+  // adds movie to favorites list
   function addToFavorites(favoriteMovie) {
     var favMovie = angular.copy(favoriteMovie);
     console.log('Posting movie: ',favMovie);
@@ -66,6 +79,7 @@ movieSearchApp.factory('MovieService',['$http',function($http) {
     });
   }
 
+  // deletes movie from favorites list
   function deleteFavorite(favoriteMovie) {
     console.log('Deleting movie: ',favoriteMovie);
     $http.delete('/favorites/' + favoriteMovie._id).then(function(response) {

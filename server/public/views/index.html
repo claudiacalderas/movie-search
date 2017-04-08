@@ -18,33 +18,33 @@
     <div class="container-fluid">
       <div class="row">
         <div class="searchDivContainer col-md-4">
-          <div class="row">
-            <p> </p>
-          </div>
+          <!-- SEARCH CONTROLLER -->
           <div class="searchDiv col-md-12" ng-controller="SearchController">
-            <input type="text" ng-model="movieTitle" placeholder="MovieTitle">
-            <button type="button" ng-click="getOMDB(movieTitle)">Search</button>
+            <div class="inputArea">
+              <input type="text" ng-model="movieTitle" placeholder=" Movie Title">
+              <button type="button" ng-click="getOMDB(movieTitle)"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+            </div>
             <div class="searchResult" ng-show="movieFromOMDB.showMovie">
               <p> </p>
               <div class="movieImageDiv">
                 <img class="movieImage" src="{{movieFromOMDB.response.data.Poster}}">
               </div>
-              <div class="movieInfo" >
+              <div class="movieInfo">
                 <h2>{{movieFromOMDB.response.data.Title + ' (' + movieFromOMDB.response.data.Year + ')'}}</h2>
                 <p>{{movieFromOMDB.response.data.Plot}}</p>
-                <p>Genre: {{movieFromOMDB.response.data.Genre}}</p>
-                <p>Director: {{movieFromOMDB.response.data.Director}}</p>
-                <p>Actors: {{movieFromOMDB.response.data.Actors}}</p>
+                <p><b>Genre: </b>{{movieFromOMDB.response.data.Genre}}</p>
+                <p><b>Director: </b>{{movieFromOMDB.response.data.Director}}</p>
+                <p><b>Actors: </b>{{movieFromOMDB.response.data.Actors}}</p>
                 <button type="button" ng-click="addToFavorites(movieFromOMDB)">Add to favorites</button>
               </div>
             </div>
             <div class="searchResult" ng-show="movieFromOMDB.showMessage">
-              <p>{{movieFromOMDB.response.data.Error}}</p>
+              <p><b>{{movieFromOMDB.response.data.Error}}</b></p>
             </div>
           </div>
         </div>
         <div class="favoritesDivContainer col-md-8">
-
+          <!-- FAVORITES CONTROLLER -->
           <div class="favoritesDiv col-md-12" ng-controller="FavoritesController">
             <div ng-repeat = "movie in favoritesObject.favorites">
               <div class="movieInfoInFavorites" >
@@ -54,9 +54,9 @@
                 <div class="infoInFavoritesDiv col-md-10">
                   <h2>{{movie.Title + ' (' + movie.Year + ')'}}</h2>
                   <p>{{movie.Plot}}</p>
-                  <p>Genre: {{movie.Genre}}</p>
-                  <p>Director: {{movie.Director}}</p>
-                  <p>Actors: {{movie.Actors}}</p>
+                  <p><b>Genre: </b>{{movie.Genre}}</p>
+                  <p><b>Director: </b>{{movie.Director}}</p>
+                  <p><b>Actors: </b>{{movie.Actors}}</p>
                   <button type="button" ng-click="deleteFavorite(movie)">Remove from favorites</button>
                 </div>
               </div>

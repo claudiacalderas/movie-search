@@ -25,9 +25,18 @@ html, body
   height: 2000px;
 }
 
+.inputArea {
+  height: 80px;
+  padding-top: 35px;
+}
+
 .movieImage {
   width: 150px;
-  text-align: center;
+  float: left;
+}
+
+.movieInfo {
+  float: left;
 }
 
 .favoritesDivContainer {
@@ -40,10 +49,11 @@ html, body
 
 .imgInFavorites{
   width: 100px;
-  text-align: center;
+  padding-top: 10px;
 }
 
-.infoInFavoritesDiv {
+.movieInfoInFavorites {
+  padding-top: 20px;
 }
 
 h1 {
@@ -52,5 +62,21 @@ h1 {
 }
 
 h2 {
+  font-weight:400;
   font-size: 20px;
+}
+
+p {
+  font-weight:200;
+  font-size: 12px;
+}
+
+input[type="text"] {
+    width: 250px;
+    vertical-align: middle;
+}
+
+button {
+  font-size: 12px;
+  font-weight: 500;
 }
