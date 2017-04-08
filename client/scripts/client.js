@@ -5,12 +5,8 @@ movieSearchApp.controller('SearchController',['$scope', 'MovieService',function(
   $scope.movieTitle = "";
   $scope.getOMDB = movieService.getOMDB;
   $scope.movieFromOMDB = movieService.movieFromOMDB;
+  $scope.addToFavorites = movieService.addToFavorites;
 
-}]);
-
-movieSearchApp.controller('DisplayController',['$scope', 'MovieService',function($scope, MovieService) {
-  var movieService = MovieService;
-  $scope.movieFromOMDB = movieService.movieFromOMDB;
 }]);
 
 movieSearchApp.controller('FavoritesController',['$scope',function($scope) {
@@ -24,6 +20,8 @@ movieSearchApp.factory('MovieService',['$http',function($http) {
     showMessage: false
   };
 
+  var favorites = [];
+
   return {
     movieFromOMDB: movieFromOMDB,
     getOMDB: function(movieFromInput) {
@@ -32,18 +30,19 @@ movieSearchApp.factory('MovieService',['$http',function($http) {
       $http.get(OMDBPath).then(function(response) {
         movieFromOMDB.response = response;
         if (movieFromOMDB.response.data.Response === "True") {
-          console.log('1 error is ', movieFromOMDB.response.data.Response);
-
           movieFromOMDB.showMovie = true;
           movieFromOMDB.showMessage = false;
-
         } else {
-          console.log('2 error is ', movieFromOMDB.response.data.Response);
           movieFromOMDB.showMovie = false;
           movieFromOMDB.showMessage = true;
         }
         console.log(response);
       });
+    },
+    addToFavorites: function(favoriteMovie) {
+      var favMovie = angular.copy(favoriteMovie);
+      favorites.push(favMovie);
+      console.log(favorites);
     }
   };
 

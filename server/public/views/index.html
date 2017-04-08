@@ -27,16 +27,14 @@
               <p>Genre: {{movieFromOMDB.response.data.Genre}}</p>
               <p>Director: {{movieFromOMDB.response.data.Director}}</p>
               <p>Actors: {{movieFromOMDB.response.data.Actors}}</p>
+              <button type="button" ng-click="addToFavorites(movieFromOMDB)">Add to favorites</button>
             </div>
           </div>
           <div class="searchResult" ng-show="movieFromOMDB.showMessage">
             <p>{{movieFromOMDB.response.data.Error}}</p>
           </div>
         </div>
-        <div ng-controller="DisplayController">
-
-
-        </div>
+        
         <div ng-controller="FavoritesController">
 
         </div>
