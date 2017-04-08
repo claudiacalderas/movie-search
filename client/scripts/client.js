@@ -1,6 +1,6 @@
 var movieSearchApp = angular.module('movieSearchApp', []);
 
-movieSearchApp.controller('SearchController',['$scope', 'MovieService',function($scope, MovieService) {
+movieSearchApp.controller('SearchController',['$scope', 'MovieService', function($scope, MovieService) {
   var movieService = MovieService;
   $scope.movieTitle = "";
   $scope.getOMDB = movieService.getOMDB;
@@ -9,8 +9,9 @@ movieSearchApp.controller('SearchController',['$scope', 'MovieService',function(
 
 }]);
 
-movieSearchApp.controller('FavoritesController',['$scope',function($scope) {
-
+movieSearchApp.controller('FavoritesController',['$scope', 'MovieService', function($scope, MovieService) {
+  var movieService = MovieService;
+  $scope.favorites = movieService.favoritesObject.favorites;
 }]);
 
 movieSearchApp.factory('MovieService',['$http',function($http) {
@@ -20,10 +21,13 @@ movieSearchApp.factory('MovieService',['$http',function($http) {
     showMessage: false
   };
 
-  var favorites = [];
+  var favoritesObject = {
+    favorites: []
+  };
 
   return {
     movieFromOMDB: movieFromOMDB,
+    favoritesObject: favoritesObject,
     getOMDB: function(movieFromInput) {
       var movie = angular.copy(movieFromInput);
       var OMDBPath = "http://www.omdbapi.com/?t=" + movie + "&y=&plot=short&r=json";
@@ -41,8 +45,8 @@ movieSearchApp.factory('MovieService',['$http',function($http) {
     },
     addToFavorites: function(favoriteMovie) {
       var favMovie = angular.copy(favoriteMovie);
-      favorites.push(favMovie);
-      console.log(favorites);
+      favoritesObject.favorites.push(favMovie);
+      console.log(favoritesObject.favorites);
     }
   };
 

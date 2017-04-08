@@ -13,31 +13,58 @@
   </head>
   <body>
     <div class="container">
-        <div ng-controller="SearchController">
-          <input type="text" ng-model="movieTitle" placeholder="MovieTitle">
-          <button type="button" ng-click="getOMDB(movieTitle)">Search</button>
-
-          <div class="searchResult" ng-show="movieFromOMDB.showMovie">
-            <div class="movieImage">
-              <img src="{{movieFromOMDB.response.data.Poster}}">
+      <div class="row">
+        <div class="col-md-12 header">
+          <h1><span class="glyphicon glyphicon-film" aria-hidden="true"></span>  Movie Search</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="searchDivContainer col-md-4">
+          <div class="row">
+            <p> </p>
+          </div>
+          <div class="searchDiv col-md-12" ng-controller="SearchController">
+            <input type="text" ng-model="movieTitle" placeholder="MovieTitle">
+            <button type="button" ng-click="getOMDB(movieTitle)">Search</button>
+            <div class="searchResult" ng-show="movieFromOMDB.showMovie">
+              <p> </p>
+              <div class="movieImageDiv">
+                <img class="movieImage" src="{{movieFromOMDB.response.data.Poster}}">
+              </div>
+              <div class="movieInfo" >
+                <h2>{{movieFromOMDB.response.data.Title + ' (' + movieFromOMDB.response.data.Year + ')'}}</h2>
+                <p>{{movieFromOMDB.response.data.Plot}}</p>
+                <p>Genre: {{movieFromOMDB.response.data.Genre}}</p>
+                <p>Director: {{movieFromOMDB.response.data.Director}}</p>
+                <p>Actors: {{movieFromOMDB.response.data.Actors}}</p>
+                <button type="button" ng-click="addToFavorites(movieFromOMDB)">Add to favorites</button>
+              </div>
             </div>
-            <div class="movieInfo" >
-              <h2>{{movieFromOMDB.response.data.Title + ' (' + movieFromOMDB.response.data.Year + ')'}}</h2>
-              <p>{{movieFromOMDB.response.data.Plot}}</p>
-              <p>Genre: {{movieFromOMDB.response.data.Genre}}</p>
-              <p>Director: {{movieFromOMDB.response.data.Director}}</p>
-              <p>Actors: {{movieFromOMDB.response.data.Actors}}</p>
-              <button type="button" ng-click="addToFavorites(movieFromOMDB)">Add to favorites</button>
+            <div class="searchResult" ng-show="movieFromOMDB.showMessage">
+              <p>{{movieFromOMDB.response.data.Error}}</p>
             </div>
           </div>
-          <div class="searchResult" ng-show="movieFromOMDB.showMessage">
-            <p>{{movieFromOMDB.response.data.Error}}</p>
+        </div>
+        <div class="favoritesDivContainer col-md-8">
+          <div class="favoritesDiv col-md-12" ng-controller="FavoritesController">
+            <div ng-repeat = "movie in favorites">
+              <div class="movieInfoInFavorites" >
+                <div class="imgInFavoritesDiv col-md-2">
+                  <img class="imgInFavorites" src="{{movie.response.data.Poster}}">
+                </div>
+                <div class="infoInFavoritesDiv col-md-10">
+                  <h2>{{movie.response.data.Title + ' (' + movie.response.data.Year + ')'}}</h2>
+                  <p>{{movie.response.data.Plot}}</p>
+                  <p>Genre: {{movie.response.data.Genre}}</p>
+                  <p>Director: {{movie.response.data.Director}}</p>
+                  <p>Actors: {{movie.response.data.Actors}}</p>
+                </div>
+              </div>
+
+            </div>
           </div>
         </div>
-        
-        <div ng-controller="FavoritesController">
-
-        </div>
+      </div>
     </div>
   </body>
 </html>
