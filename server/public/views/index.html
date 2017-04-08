@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="movieSearchApp">
   <head>
     <meta charset="utf-8">
     <title>Movie Search</title>
@@ -12,7 +12,33 @@
 
   </head>
   <body>
+    <div class="container">
+        <div ng-controller="SearchController">
+          <input type="text" ng-model="movieTitle" placeholder="MovieTitle">
+          <button type="button" ng-click="getOMDB(movieTitle)">Search</button>
+
+          <div class="searchResult" ng-show="movieFromOMDB.show">
+            <div class="movieImage">
+              <img src="{{movieFromOMDB.response.data.Poster}}">
+            </div>
+            <div class="movieInfo" >
+              <h2>{{movieFromOMDB.response.data.Title + ' (' + movieFromOMDB.response.data.Year + ')'}}</h2>
+              <p>{{movieFromOMDB.response.data.Plot}}</p>
+              <p>Genre: {{movieFromOMDB.response.data.Genre}}</p>
+              <p>Director: {{movieFromOMDB.response.data.Director}}</p>
+              <p>Actors: {{movieFromOMDB.response.data.Actors}}</p>
+
+            </div>
+          </div>
+
+        </div>
+        <div ng-controller="DisplayController">
 
 
+        </div>
+        <div ng-controller="FavoritesController">
+
+        </div>
+    </div>
   </body>
 </html>
