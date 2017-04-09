@@ -57,6 +57,10 @@ movieSearchApp.factory('MovieService',['$http',function($http) {
     var OMDBPath = "http://www.omdbapi.com/?t=" + movie + "&y=&plot=short&r=json";
     $http.get(OMDBPath).then(function(response) {
       movieFromOMDB.response = response;
+      // the object from OMDB has a property "Response" that is set to
+      // "True" if a movie was found. in that case I use the flags in Index.html
+      // to display the movie info and hide the message,
+      // viceversa in case an error message is received 
       if (movieFromOMDB.response.data.Response === "True") {
         movieFromOMDB.showMovie = true;
         movieFromOMDB.showMessage = false;
