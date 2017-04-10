@@ -4,7 +4,10 @@ var movieSearchApp = angular.module('movieSearchApp', []);
 movieSearchApp.controller('SearchController',['$scope', 'MovieService', function($scope, MovieService) {
   var movieService = MovieService;
   $scope.movieTitle = movieService.movieTitle;
-  $scope.getOMDB = movieService.getOMDB;
+  $scope.getOMDB = function(movie) {
+    movieService.getOMDB(movie);
+    $scope.movieTitle = '';
+  };
   $scope.movieFromOMDB = movieService.movieFromOMDB;
   $scope.addToFavorites = movieService.addToFavorites;
 
@@ -22,8 +25,6 @@ movieSearchApp.controller('FavoritesController',['$scope', 'MovieService', funct
 
 // MovieService factory
 movieSearchApp.factory('MovieService',['$http',function($http) {
-
-  var movieTitle = "";
 
   // movieFromOMDB is an object that stores response from OMDB
   // showMovie and showMessage are flags that help displaying the
@@ -52,7 +53,6 @@ movieSearchApp.factory('MovieService',['$http',function($http) {
   // gets information from OMDB based on search criteria
   function getOMDB(movieTitle) {
     var movie = angular.copy(movieTitle);
-    movieTitle = "";
     if (movie) {
     var OMDBPath = "http://www.omdbapi.com/?t=" + movie + "&y=&plot=short&r=json";
     $http.get(OMDBPath).then(function(response) {
@@ -60,7 +60,7 @@ movieSearchApp.factory('MovieService',['$http',function($http) {
       // the object from OMDB has a property "Response" that is set to
       // "True" if a movie was found. in that case I use the flags in Index.html
       // to display the movie info and hide the message,
-      // viceversa in case an error message is received 
+      // viceversa in case an error message is received
       if (movieFromOMDB.response.data.Response === "True") {
         movieFromOMDB.showMovie = true;
         movieFromOMDB.showMessage = false;
@@ -76,6 +76,7 @@ movieSearchApp.factory('MovieService',['$http',function($http) {
   // adds movie to favorites list
   function addToFavorites(favoriteMovie) {
     var favMovie = angular.copy(favoriteMovie);
+    favoriteMovie = {};
     console.log('Posting movie: ',favMovie);
     $http.post('/favorites', favMovie).then(function(response) {
       console.log(response);

@@ -27,7 +27,7 @@
             <div class="searchResult" ng-show="movieFromOMDB.showMovie">
               <p> </p>
               <div class="movieImageDiv">
-                <img class="movieImage" src="{{movieFromOMDB.response.data.Poster}}">
+                <img class="movieImage" ng-if="movieFromOMDB.response.data.Poster != 'N/A'" ng-src="{{movieFromOMDB.response.data.Poster}}">
               </div>
               <div class="movieInfo">
                 <h2>{{movieFromOMDB.response.data.Title + ' (' + movieFromOMDB.response.data.Year + ')'}}</h2>
@@ -49,7 +49,7 @@
             <div ng-repeat = "movie in favoritesObject.favorites">
               <div class="movieInfoInFavorites" >
                 <div class="imgInFavoritesDiv col-md-2">
-                  <img class="imgInFavorites" src="{{movie.Poster}}">
+                  <img class="imgInFavorites" ng-if="movie.Poster != 'N/A'" ng-src="{{movie.Poster}}">
                 </div>
                 <div class="infoInFavoritesDiv col-md-10">
                   <h2>{{movie.Title + ' (' + movie.Year + ')'}}</h2>
